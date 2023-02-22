@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6cjp6mw1f672"]
+
+[ext_resource type="Script" path="res://power_switch/PowerSwitch.cs" id="1_o41a2"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u4pg2"]
+height = 1.0
+radius = 0.437997
+
+[sub_resource type="PrismMesh" id="PrismMesh_wae6k"]
+size = Vector3(0.2, 0.25, 1.5)
+
+[node name="PowerSwitch" type="Area3D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_o41a2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_u4pg2")
+
+[node name="Marker" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.75, 0.563369)
+mesh = SubResource("PrismMesh_wae6k")
+skeleton = NodePath("")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

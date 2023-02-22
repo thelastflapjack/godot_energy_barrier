@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=3 uid="uid://dl7uoaqpwhfqc"]
+
+[ext_resource type="Script" path="res://barrier/Barrier.cs" id="1_ko3ye"]
+[ext_resource type="Material" uid="uid://phtdx4kwgr4o" path="res://barrier/barrier.material" id="2_m0k14"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_4g3y0"]
+size = Vector2(4, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kxlvl"]
+size = Vector3(0.2, 3, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kx3i4"]
+size = Vector3(0.2, 3, 0.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1qqcu"]
+size = Vector3(4.4, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2vcsx"]
+size = Vector3(4, 3, 0.2)
+
+[node name="Barrier" type="Node3D"]
+script = ExtResource("1_ko3ye")
+
+[node name="FieldMeshBack" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0.02)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_4g3y0")
+surface_material_override/0 = ExtResource("2_m0k14")
+
+[node name="FieldMeshFront" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.5, -0.02)
+cast_shadow = 0
+instance_shader_parameters/deniedWeight = 1.0
+instance_shader_parameters/poweredWeight = 1.0
+mesh = SubResource("QuadMesh_4g3y0")
+surface_material_override/0 = ExtResource("2_m0k14")
+
+[node name="Post1" type="MeshInstance3D" parent="." groups=["navmesh"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 1.5, 0)
+mesh = SubResource("BoxMesh_kxlvl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Post1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Post1/StaticBody3D"]
+shape = SubResource("BoxShape3D_kx3i4")
+
+[node name="Post2" type="MeshInstance3D" parent="." groups=["navmesh"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, 1.5, 0)
+mesh = SubResource("BoxMesh_kxlvl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Post2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Post2/StaticBody3D"]
+shape = SubResource("BoxShape3D_kx3i4")
+
+[node name="Top" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, 0)
+mesh = SubResource("BoxMesh_1qqcu")
+
+[node name="Blocker" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Blocker"]
+shape = SubResource("BoxShape3D_2vcsx")
